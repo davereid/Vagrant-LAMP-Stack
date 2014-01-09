@@ -10,6 +10,8 @@
 
   # The project name is base for directories, hostname and alike
   project_name = "projectname"
+  
+  database_name = project_name
 
   # MySQL and PostgreSQL password - feel free to change it to something
   # more secure (Note: Changing this will require you to update the index.php example file)
@@ -38,9 +40,9 @@
     config.hostmanager.enabled = true
     config.hostmanager.manage_host = true
     config.vm.define project_name do |node|
-      node.vm.hostname = project_name + ".local"
+      node.vm.hostname = project_name + ".dev"
       node.vm.network :private_network, ip: ip_address
-      node.hostmanager.aliases = [ "www." + project_name + ".local" ]
+      node.hostmanager.aliases = [ "www." + project_name + ".dev" ]
     end
     config.vm.provision :hostmanager
 
@@ -61,14 +63,14 @@
           :name           => project_name,
 
           # Name of MySQL database that should be created
-          :db_name        => "dbname",
+          :db_name        => database_name,
 
           # Server name and alias(es) for Apache vhost
-          :server_name    => project_name + ".local",
-          :server_aliases =>  [ "www." + project_name + ".local" ],
+          :server_name    => project_name + ".dev",
+          :server_aliases =>  [ "www." + project_name + ".dev" ],
 
           # Document root for Apache vhost
-          :docroot        => "/var/www/" + project_name + "/public",
+          :docroot        => "/var/www/" + project_name + "/docroot",
 
           # General packages
           :packages   => %w{ vim git screen curl },
